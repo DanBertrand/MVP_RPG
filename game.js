@@ -50,6 +50,7 @@ class Game {
 }
 
 
+
 function startGame(){
 	game = new Game
 	turn = new Turn
@@ -60,3 +61,5 @@ function startGame(){
 	}
 	console.log(`####################################  END OF THE GAME ${game.winningByClock().name} WON #################################################`)
 }
+
+
