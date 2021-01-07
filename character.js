@@ -1,9 +1,10 @@
 class Character {
-	constructor(name, hp, dmg, status = "playing"){
+	constructor(name, hp, dmg, mana, status = "playing"){
+		this.name = name;
 		this.hp = hp;
 		this.dmg = dmg;
-		this.status = status
-		this.name = name
+		this.mana = mana;
+		this.status = status;
 	}
 
 	takeDamage = (number) => {
@@ -22,29 +23,75 @@ class Character {
 			return true
 		}
 	}
+
 };
 
 
 class Fighter extends Character {
-    constructor(name, hp = 12, dmg = 4, status) {
-        super(name, hp, dmg, status);
+    constructor(name = "Grace", hp = 12, dmg = 4, mana = 40, status) {
+        super(name, hp, dmg, mana, status);
+    }
+
+    darkVision = (character, victim) => {
+        this.dmg = 5;
+        this.mana -= 40;
+        let name = character.name
+        character.dealDamage(victim);
+        this.dmg = 4;
     }
 }
 
 
 class Paladin extends Character {
-    constructor(name, hp = 16, dmg = 3, status) {
-        super(name, hp, dmg, status);
+    constructor(name = "Ulder", hp = 16, dmg = 3, mana = 160, status) {
+        super(name, hp, dmg, mana, status);
+    }
+
+    healingLighting = (character, victim) => {
+        this.mana -= 40;
+        this.hp += 5;
+        this.dmg = 4;
+        character.dealDamage(victim);
+        this.dmg = 3
     }
 }
 
+class Monk extends Character {
+    constructor(name = "Moana", hp = 8, dmg = 2, mana = 200, status) {
+        super(name, hp, dmg, mana, status);
+    }
 
+    heal = () => {
+        this.mana -= 25;
+        this.hp += 8;
+    }
+}
 
+class Berzerker extends Character {
+    constructor(name = "Draven", hp = 8, dmg = 4, mana = 0, status) {
+        super(name, hp, dmg, mana, status);
+    }
 
-const Grace = new Fighter(name = "Grace");
-const Ulder = new Paladin(name = "Ulder");
-const Dan = new Paladin(name = "Dan");
+    rage = (character, victim) => {
+        this.dmg += 1;
+        this.hp -= 1;
+        character.dealDamage(victim);
+    }
+}
 
+class Assassin extends Character {
+    constructor(name = "Carl", hp = 6, dmg = 6, mana = 20, status) {
+        super(name, hp, dmg, mana, status);
+    }
 
-let characters = [Grace, Ulder, Dan]
+    shadowHit = (character, victim) => {
+        this.mana -= 20;
+        this.dmg = 7;
+        character.dealDamage(victim);
+        this.dmg = 6;
+        if (victim.isDead == false) {
+            this.hp -= 7;
+        }
+    }
+}
 
